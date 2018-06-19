@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Front Page";
+}
+
+<div class="row">
+    <div class="container-fluid">
+        <div class="row">
+            <h2 style="background-color: Yellow;color: Blue; text-align: center; font-style: oblique">PMTool2</h2>
+            <center>Put Map here</center>
+            <div id="googleMap" style="height:700px;width:100%;"></div>
+            <script>
+
+        function myMap() {
+            var myCenter = new google.maps.LatLng(49.1944509, -122.879091);
+            var mapProp = { center: myCenter, zoom: 10.5, scrollwheel: true, true: false, mapTypeId: google.maps.MapTypeId.ROADMAP };
+            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+            //place marker
+            var marker = new google.maps.Marker({ position: myCenter });
+            marker.setMap(map);
+
+            var rectangleCol[];
+            for (ns = 0; ns++ ns < 35) {
+                for (ew = 0; ew++; ew < 51) {
+                
+
+                }
+            }
+
+            //place square
+            var rectangle1 = new google.maps.Rectangle({
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35,
+                map: map,
+                bounds: {
+                    north: 49.382483,
+                    south: 49.372620,
+                    east: -123.280784,
+                    west: -123.297115
+                }
+            });
+            //east-west difference: .016331
+            //every square towards the east, add east-west difference
+            //north-south difference: .009863
+            //every square towards the south, subtract north-south difference
+            var rectangle2 = new google.maps.Rectangle({
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35,
+                map: map,
+                bounds: {
+                    north: 49.382483,
+                    south: 49.372620,
+                    east: -123.264453,
+                    west: -123.280784
+                }
+            });
+            //east-west difference: .016331
+            //every square towards the east, add east-west difference
+            //north-south difference: .009863
+            //every square towards the south, subtract north-south difference
+
+            
+        }
+            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFP55xhCZeWNHILIO7vw2oLTNFPy8klOI&callback=myMap"></script>
+        </div>
+    </div>
+
+</div>
+
+<!--AIzaSyBFP55xhCZeWNHILIO7vw2oLTNFPy8klOI -->
