@@ -20,10 +20,19 @@
             marker.setMap(map);
 
             var rectangleCol[];
-            for (ns = 0; ns++ ns < 35) {
-                for (ew = 0; ew++; ew < 51) {
-                
+            var north = 49.382483;
+            var south = 49.372620;
+            var east = -123.280784;
+            var west = -123.297115;
 
+            for (ns = 1; ns++; ns < 35) {                
+                var thisNorth = north - (ns * 0.009863);
+                var thisSouth = south - (ns * 0.009863);
+                for (ew = 0; ew++; ew < 51) {
+                    var thisEast = east + (ew * 0.016331);
+                    var thisWest = west + (ew * 0.016331);
+                    console.log(thisNorth, thisSouth, thisEast, thisWest);
+                    rectangleCol.push({ north: thisNorth, south: thisSouth, east: thisEast, west: thisWest });
                 }
             }
 
