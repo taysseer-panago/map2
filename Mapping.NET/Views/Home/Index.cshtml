@@ -12,68 +12,86 @@
 
         function myMap() {
             var myCenter = new google.maps.LatLng(49.1944509, -122.879091);
-            var mapProp = { center: myCenter, zoom: 10.5, scrollwheel: true, true: false, mapTypeId: google.maps.MapTypeId.ROADMAP };
+            var mapProp = { center: myCenter, zoom: 10.5, scrollwheel: false, mapTypeId: google.maps.MapTypeId.ROADMAP };
             var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
             //change 1
             //place marker
             var marker = new google.maps.Marker({ position: myCenter });
             marker.setMap(map);
 
-            var rectangleCol[];
+            var rectangleCol = [];
             var north = 49.382483;
             var south = 49.372620;
             var east = -123.280784;
             var west = -123.297115;
 
-            for (ns = 1; ns++; ns < 35) {                
-                var thisNorth = north - (ns * 0.009863);
-                var thisSouth = south - (ns * 0.009863);
-                for (ew = 0; ew++; ew < 51) {
-                    var thisEast = east + (ew * 0.016331);
-                    var thisWest = west + (ew * 0.016331);
-                    console.log(thisNorth, thisSouth, thisEast, thisWest);
+            for (n = 1; n < 35; n++) {                
+                var thisNorth = north - (n * 0.009863);
+                var thisSouth = south - (n * 0.009863);
+                for (e = 1; e < 51; e++ ) {
+                    var thisEast = east + (e * 0.016331);
+                    var thisWest = west + (e * 0.016331);
+                    
                     rectangleCol.push({ north: thisNorth, south: thisSouth, east: thisEast, west: thisWest });
                 }
             }
 
-            //place square
-            var rectangle1 = new google.maps.Rectangle({
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF0000',
-                fillOpacity: 0.35,
-                map: map,
-                bounds: {
-                    north: 49.382483,
-                    south: 49.372620,
-                    east: -123.280784,
-                    west: -123.297115
-                }
-            });
-            //east-west difference: .016331
-            //every square towards the east, add east-west difference
-            //north-south difference: .009863
-            //every square towards the south, subtract north-south difference
-            var rectangle2 = new google.maps.Rectangle({
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF0000',
-                fillOpacity: 0.35,
-                map: map,
-                bounds: {
-                    north: 49.382483,
-                    south: 49.372620,
-                    east: -123.264453,
-                    west: -123.280784
-                }
-            });
-            //east-west difference: .016331
-            //every square towards the east, add east-west difference
-            //north-south difference: .009863
-            //every square towards the south, subtract north-south difference
+            console.log()
 
+            for (var r = 0; r < rectangleCol.length; r++)
+            {
+                console.log(rectangleCol[r]);
+                var rectangle = new google.maps.Rectangle({
+                    strokeColor: '#0061ff',
+                    strokeOpacity: 0.5,
+                    strokeWeight: 0.5,
+                    fillColor: '#cee1ff',
+                    fillOpacity: 0.5,
+                    map: map,
+                    bounds: {
+                        north: rectangleCol[r].north,
+                        south: rectangleCol[r].south,
+                        east: rectangleCol[r].east,
+                        west: rectangleCol[r].west
+                    }
+                });
+            }
+
+            //place square
+            //var rectangle1 = new google.maps.Rectangle({
+            //    strokeColor: '#FF0000',
+            //    strokeOpacity: 0.8,
+            //    strokeWeight: 2,
+            //    fillColor: '#FF0000',
+            //    fillOpacity: 0.35,
+            //    map: map,
+            //    bounds: {
+            //        north: 49.382483,
+            //        south: 49.372620,
+            //        east: -123.280784,
+            //        west: -123.297115
+            //    }
+            //});
+            
+            //var rectangle2 = new google.maps.Rectangle({
+            //    strokeColor: '#FF0000',
+            //    strokeOpacity: 0.8,
+            //    strokeWeight: 2,
+            //    fillColor: '#FF0000',
+            //    fillOpacity: 0.35,
+            //    map: map,
+            //    bounds: {
+            //        north: 49.382483,
+            //        south: 49.372620,
+            //        east: -123.264453,
+            //        west: -123.280784
+            //    }
+            //});
+
+            //east-west difference: .016331
+            //every square towards the east, add east-west difference
+            //north-south difference: .009863
+            //every square towards the south, subtract north-south difference
             
         }
             </script>
