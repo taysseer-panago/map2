@@ -12,12 +12,17 @@
 
         function myMap() {
             var myCenter = new google.maps.LatLng(49.1944509, -122.879091);
-            var mapProp = { center: myCenter, zoom: 10.5, scrollwheel: false, mapTypeId: google.maps.MapTypeId.ROADMAP };
+            var mapProp = { center: myCenter, zoom: 10.5, scrollwheel: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
             var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            var infoWindow = new google.maps.InfoWindow;
             //change 1
             //place marker
             var marker = new google.maps.Marker({ position: myCenter });
             marker.setMap(map);
+
+            labelDict = ['0', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                         'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA',
+                         'BB', 'CC', 'DD', 'EE', 'FF', 'GG', 'HH', 'II'];
 
             var rectangleCol = [];
             var north = 49.382483;
@@ -28,19 +33,19 @@
             for (n = 1; n < 35; n++) {                
                 var thisNorth = north - (n * 0.009863);
                 var thisSouth = south - (n * 0.009863);
+                var label1 = labelDict[n];
                 for (e = 1; e < 51; e++ ) {
                     var thisEast = east + (e * 0.016331);
                     var thisWest = west + (e * 0.016331);
-                    
-                    rectangleCol.push({ north: thisNorth, south: thisSouth, east: thisEast, west: thisWest });
+                    var newLabel = label1 + e.toString();
+                    rectangleCol.push({ label: newLabel, north: thisNorth, south: thisSouth, east: thisEast, west: thisWest });
                 }
             }
 
-            console.log()
-
-            for (var r = 0; r < rectangleCol.length; r++)
+            for (var r = 1; r < rectangleCol.length; r++)
             {
                 console.log(rectangleCol[r]);
+                var myLabel = rectangleCol[r].label;
                 var rectangle = new google.maps.Rectangle({
                     strokeColor: '#0061ff',
                     strokeOpacity: 0.5,
@@ -55,7 +60,13 @@
                         west: rectangleCol[r].west
                     }
                 });
+                rectangle.addListener('click', function (e) {
+                    infoWindow.setContent(myLabel);
+                    infoWindow.setPosition(event.latLng);
+                    infoWindow.open(map);
+                });
             }
+
 
             //place square
             //var rectangle1 = new google.maps.Rectangle({
