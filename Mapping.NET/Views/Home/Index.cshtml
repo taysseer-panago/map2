@@ -20,33 +20,34 @@
             var marker = new google.maps.Marker({ position: myCenter });
             marker.setMap(map);
 
-            labelDict = ['0', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+            labelDict = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                          'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA',
                          'BB', 'CC', 'DD', 'EE', 'FF', 'GG', 'HH', 'II'];
 
             var rectangleCol = [];
             var north = 49.382483;
-            var south = 49.372620;
-            var east = -123.280784;
-            var west = -123.297115;
+            //**OLD SOUTH COORDINATE** var south = 49.372620;
+            var south = 49.371683;
 
-            for (n = 1; n < 35; n++) {                
-                var thisNorth = north - (n * 0.009863);
-                var thisSouth = south - (n * 0.009863);
+            var east = -123.280784;
+            var west = -123.297259;
+
+            for (n = 0; n < 35; n++) {
+                var thisNorth = north - (n * 0.010800);
+                var thisSouth = south - (n * 0.010800);
                 var label1 = labelDict[n];
-                for (e = 1; e < 51; e++ ) {
-                    var thisEast = east + (e * 0.016331);
-                    var thisWest = west + (e * 0.016331);
-                    var newLabel = label1 + e.toString();
+                for (e = 0; e < 51; e++ ) {
+                    var thisEast = east + (e * 0.016475);
+                    var thisWest = west + (e * 0.016475);
+                    var newLabel = label1 + (e+1).toString();
                     rectangleCol.push({ label: newLabel, north: thisNorth, south: thisSouth, east: thisEast, west: thisWest });
                 }
             }
 
-            for (var r = 1; r < rectangleCol.length; r++)
-            {
-                console.log(rectangleCol[r]);
-                var myLabel = rectangleCol[r].label;
+            for (var r = 0; r < rectangleCol.length; r++)
+            {   
                 var rectangle = new google.maps.Rectangle({
+                    label: rectangleCol[r].label,
                     strokeColor: '#0061ff',
                     strokeOpacity: 0.5,
                     strokeWeight: 0.5,
@@ -59,10 +60,13 @@
                         east: rectangleCol[r].east,
                         west: rectangleCol[r].west
                     }
+
                 });
                 rectangle.addListener('click', function (e) {
-                    infoWindow.setContent(myLabel);
-                    infoWindow.setPosition(event.latLng);
+                    //var myLabel = rectangleCol[r].label;
+                    //infoWindow.setContent(myLabel);
+                    infoWindow.setContent(this.label);
+                    infoWindow.setPosition(e.latLng);
                     infoWindow.open(map);
                 });
             }
@@ -83,25 +87,10 @@
             //        west: -123.297115
             //    }
             //});
-            
-            //var rectangle2 = new google.maps.Rectangle({
-            //    strokeColor: '#FF0000',
-            //    strokeOpacity: 0.8,
-            //    strokeWeight: 2,
-            //    fillColor: '#FF0000',
-            //    fillOpacity: 0.35,
-            //    map: map,
-            //    bounds: {
-            //        north: 49.382483,
-            //        south: 49.372620,
-            //        east: -123.264453,
-            //        west: -123.280784
-            //    }
-            //});
 
             //east-west difference: .016331
             //every square towards the east, add east-west difference
-            //north-south difference: .009863
+            //north-south difference: NEW: 0.010724  OLD: .009863
             //every square towards the south, subtract north-south difference
             
         }
